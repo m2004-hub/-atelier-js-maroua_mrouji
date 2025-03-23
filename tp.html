@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atelier 1 - JavaScript</title>
+    <script>
+        // Code JavaScript
+    </script>
+</head>
+<body>
+    <p>Question 1</p>
+    <input type="text" id="multiplication_input">
+    <button onclick="afficherTableMultiplication()">Afficher la table</button>
+    <script>
+        function afficherTableMultiplication() {
+            let nombre = parseInt(document.getElementById("multiplication_input").value);
+            let resultat = "Table de multiplication de " + nombre + " :\n";
+            for (let i = 1; i <= 10; i++) {
+                resultat += nombre + " x " + i + " = " + (nombre * i) + "\n";
+            }
+            alert(resultat);
+        }
+    </script>
+
+    <p>Question 2</p>
+    <button onclick="calculerPGCD()">Calculer le PGCD</button>
+    <script>
+        function calculerPGCD() {
+            let a = parseInt(prompt("Entrez le premier nombre :"));
+            let b = parseInt(prompt("Entrez le deuxième nombre :"));
+            while (b !== 0) {
+                let temp = b;
+                b = a % b;
+                a = temp;
+            }
+            alert("Le PGCD est : " + a);
+        }
+    </script>
+
+    <p>Question 3</p>
+    <input type="text" id="somme_input">
+    <button onclick="sommeChiffres()">Calculer la somme</button>
+    <script>
+        function sommeChiffres() {
+            let nombre = document.getElementById("somme_input").value;
+            let somme = 0;
+            for (let chiffre of nombre) {
+                somme += parseInt(chiffre);
+            }
+            alert("Somme des chiffres : " + somme);
+        }
+    </script>
+
+    <p>Question 4</p>
+    
+
+    <p>VOIR CONSOLE</p>
+    <button onclick="testMatrices()">exec</button>
+    
+
+    <script>
+        function creerMatrice(n) {
+            let matrice = [];
+            for (let i = 0; i < n; i++) {
+                matrice[i] = [];
+                for (let j = 0; j < n; j++) {
+                    matrice[i][j] = Math.floor(Math.random() * 10);
+                }
+            }
+            return matrice;
+        }
+
+        function afficherMatrice(matrice) {
+            return matrice.map(row => row.join(" ")).join("\n");
+        }
+
+        function additionMatrices(A, B) {
+            let n = A.length;
+            let resultat = Array.from({ length: n }, () => Array(n).fill(0));
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    resultat[i][j] = A[i][j] + B[i][j];
+                }
+            }
+            return resultat;
+        }
+
+        function soustractionMatrices(A, B) {
+            let n = A.length;
+            let resultat = Array.from({ length: n }, () => Array(n).fill(0));
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    resultat[i][j] = A[i][j] - B[i][j];
+                }
+            }
+            return resultat;
+        }
+
+     
+       
+
+        function testMatrices() {
+            let n = 3;
+            let A = creerMatrice(n);
+            let B = creerMatrice(n);
+
+            console.log("Matrice A :\n" + afficherMatrice(A));
+            console.log("Matrice B :\n" + afficherMatrice(B));
+            console.log("Addition (A + B) :\n" + afficherMatrice(additionMatrices(A, B)));
+            console.log("Soustraction (A - B) :\n" + afficherMatrice(soustractionMatrices(A, B)));
+          
+        }
+    </script>
+
+    <p>Question 5</p>
+    <input type="text" id="decimal_input">
+    <button onclick="convertirBinaire()">Convertir en binaire</button>
+    <script>
+        function decimalToBinary(n) {
+            return n === 0 ? "0" : (n === 1 ? "1" : decimalToBinary(Math.floor(n / 2)) + (n % 2));
+        }
+        function convertirBinaire() {
+            let nombre = parseInt(document.getElementById("decimal_input").value);
+            alert("Binaire : " + decimalToBinary(nombre));
+        }
+    </script>
+
+    <p>Question 6</p>
+    <h1>Calculatrice</h1>
+    <input type="text" id="nombre1"> 
+    <input type="text" id="nombre2">
+    <input type="radio" name="operation" value="+" checked>+
+    <input type="radio" name="operation" value="-">-
+    <input type="radio" name="operation" value="*">*
+    <input type="radio" name="operation" value="/">/
+    <button onclick="calculer()">Calculer</button>
+    <div id="resultat"></div>
+    <script>
+        function calculer() {
+            let a = parseFloat(document.getElementById("nombre1").value);
+            let b = parseFloat(document.getElementById("nombre2").value);
+            let operation = document.querySelector('input[name="operation"]:checked').value;
+            let resultat;
+            switch (operation) {
+                case '+': resultat = a + b; break;
+                case '-': resultat = a - b; break;
+                case '*': resultat = a * b; break;
+                case '/': resultat = a / b; break;
+            }
+            document.getElementById("resultat").innerText = "Résultat : " + resultat;
+        }
+    </script>
+
+    <p>Question 7</p>
+    <h1>Formulaire</h1>
+    <form onsubmit="return validerFormulaire()">
+        Email: <input type="text" id="email"><br>
+        Téléphone: <input type="text" id="telephone"><br>
+        Mot de passe: <input type="password" id="password"><br>
+        Confirmer Mot de passe: <input type="password" id="confirm_password"><br>
+        <button type="submit">Valider</button>
+    </form>
+    <script>
+        function validerFormulaire() {
+            let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            let telRegex = /^\d{10}$/;
+            let email = document.getElementById("email").value;
+            let telephone = document.getElementById("telephone").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirm_password").value;
+            if (!emailRegex.test(email)) {
+                alert("Email invalide");
+                return false;
+            }
+            if (!telRegex.test(telephone)) {
+                alert("Numéro de téléphone invalide");
+                return false;
+            }
+            if (password !== confirmPassword) {
+                alert("Les mots de passe ne correspondent pas");
+                return false;
+            }
+            alert("Formulaire valide !");
+            return true;
+        }
+    </script>
+
+    <p>Question 8</p>
+    <h1>Carrousel</h1>
+    <button onclick="changerImage(-1)">Précédent</button>
+    <img id="carrousel" src="images/caroot.jpg" width="200">
+    <button onclick="changerImage(1)">Suivant</button>
+    <script>
+        let images = ["images/caroot.jpg","images/potato.jpg", "images/tomato.jpg"];
+        let index = 0;
+        function changerImage(sens) {
+            index = (index + sens + images.length) % images.length;
+            document.getElementById("carrousel").src = images[index];
+        }
+    </script>
+</body>
+</html>
+ 
